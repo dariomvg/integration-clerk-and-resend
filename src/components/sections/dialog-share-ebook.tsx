@@ -100,7 +100,7 @@ export function DialogShareEbook({
             </Button>
           </DialogFooter>
           {message && (
-            <div className="text-sm text-accent-foreground mt-2">{message}</div>
+            <div className="text-sm font-bold mt-2">{message}</div>
           )}
         </form>
       </DialogContent>

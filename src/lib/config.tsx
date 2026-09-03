@@ -6,7 +6,7 @@
 export const siteConfig = {
   name: "Clerk/Resend",
   description: "Integration with Resend and Clerk.",
-  githubUrl: "https://github.com/dariomvg",
+  githubUrl: "https://github.com/dariomvg/integration-clerk-and-resend",
   githubHandle: "/dariomvg",
 };
 
