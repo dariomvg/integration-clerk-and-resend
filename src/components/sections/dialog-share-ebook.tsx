@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { sendInvitation } from "@/lib/resend/actions";
 import { getCurrentUser } from "@/lib/clerk/actions";
+import { useState } from "react";
 
 
 export function DialogShareEbook({
@@ -26,7 +27,9 @@ export function DialogShareEbook({
   slug: string;
   title: string;
 }) {
+  const [message, SetMessage] = useState<string>("");
   const link = `${process.env.NEXT_PUBLIC_APP_URL}/ebooks/${slug}`;
+
 
   async function handleSubmit(formData: FormData) {
     const user = await getCurrentUser();
@@ -36,8 +39,15 @@ export function DialogShareEbook({
     const userName = user.data?.firstName || "Someone";
     const email = formData.get("share-email") as string;
     const message = formData.get("share-message") as string;
-    const emailFrom = process.env.NEXT_PUBLIC_EMAIL_FROM_DEFAULT || "";
-    await sendInvitation(email , userName, link, message, title);
+    const result = await sendInvitation(email , userName, link, message, title);
+    if(result.success) {
+      SetMessage("Email sent successfully!. Check your inbox(maybe spam).");
+      setTimeout(() => {
+        SetMessage("");
+      }, 5000);
+    } else {
+      SetMessage(`Error sending email: ${result.error.message}`);
+    }
   }
 
   return (
@@ -89,6 +99,9 @@ export function DialogShareEbook({
               Send
             </Button>
           </DialogFooter>
+          {message && (
+            <div className="text-sm text-accent-foreground mt-2">{message}</div>
+          )}
         </form>
       </DialogContent>
     </Dialog>

@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ebookResumes } from "@/lib/config";
 import { sendEmail } from "@/lib/resend/actions";
+import { useState } from "react";
 
 export function DialogGetResume({
   slug,
@@ -23,6 +24,8 @@ export function DialogGetResume({
   slug: string;
   title: string;
 }) {
+
+  const [message, SetMessage] = useState<string>("");
   async function handleSubmit(formData: FormData) {
     const email = formData.get("resume-email") as string;
     const resume = ebookResumes.find((r) => r.slug === slug)?.resume;
@@ -34,8 +37,13 @@ export function DialogGetResume({
       text: resume,
     });
 
-    if (!result.success) {
-      console.error(result.error.type, result.error.message);
+    if(result.success) {
+      SetMessage("Email sent successfully!. Check your inbox(maybe spam).");
+      setTimeout(() => {
+        SetMessage("");
+      }, 5000);
+    } else {
+      SetMessage(`Error sending email: ${result.error.message}`);
     }
   }
 
@@ -77,6 +85,11 @@ export function DialogGetResume({
               Send resume
             </Button>
           </DialogFooter>
+
+          {message && (
+            <div className="text-sm text-accent-foreground mt-2">{message}</div>
+          )}
+
         </form>
       </DialogContent>
     </Dialog>
