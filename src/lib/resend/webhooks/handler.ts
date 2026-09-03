@@ -43,7 +43,7 @@ export function verifyWebhookSignature(payload: string, headers: SvixHeaders): W
 
   try {
     const webhook = new Webhook(secret);
-    const event = webhook.verify(payload, headers) as WebhookEvent;
+    const event = webhook.verify(payload, headers) as unknown as WebhookEvent;
     return { valid: true, event };
   } catch (error) {
     return {
