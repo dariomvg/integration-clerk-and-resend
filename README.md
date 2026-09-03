@@ -150,8 +150,7 @@ RESEND_API_KEY=
 The Clerk and Resend integrations in this project were scaffolded with **[formaui](https://formaui.site)** — a CLI that drops production-ready auth, AI, payments, and email integrations straight into a Next.js project (`lib/<provider>/` modules, middleware injection, env var sync, and a `SETUP.md` per provider).
 
 ```bash
-npx @dariomvg/formaui add clerk
-npx @dariomvg/formaui add resend
+npx @dariomvg/formaui@latest
 ```
 
 Built by [Dari](https://github.com/dariomvg) — [formaui.site](https://formaui.site)
