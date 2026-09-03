@@ -1,0 +1,319 @@
+---
+title: "Modern Next.js"
+description: "A practical guide to building fast, maintainable, and scalable web applications with modern Next.js patterns."
+date: "2026-09-02"
+slug: "modern-nextjs"
+---
+
+# Modern Next.js
+
+## Introduction
+
+Modern web applications require more than a collection of components.
+
+They need clear architecture, efficient data fetching, good performance, and a structure that remains easy to maintain as the application grows.
+
+Next.js provides tools for building these applications without forcing developers into a single architecture.
+
+This guide explores practical patterns for building modern Next.js applications.
+
+---
+
+# Chapter 1: Start with Architecture
+
+A good project structure should make the application easier to understand.
+
+A typical application might separate:
+
+- Routes
+- Components
+- Business logic
+- Database access
+- External services
+- Utilities
+
+Avoid putting everything inside route handlers or components.
+
+Clear boundaries make future changes easier.
+
+---
+
+# Chapter 2: Server and Client Components
+
+One of the most important concepts in modern Next.js is understanding where code should execute.
+
+Server Components are useful for:
+
+- Data fetching
+- Database access
+- Rendering static content
+- Keeping server-only logic private
+
+Client Components are useful when you need:
+
+- Browser APIs
+- Event handlers
+- Interactive state
+- Client-side effects
+
+Use client-side code when interaction requires it, not by default.
+
+---
+
+# Chapter 3: Data Fetching
+
+Fetch data as close as possible to where it is needed.
+
+Instead of creating unnecessary client-side requests, consider whether the data can be loaded on the server.
+
+A simple flow might look like:
+
+**Request → Server Component → Data Source → Render**
+
+This can reduce client-side complexity.
+
+---
+
+# Chapter 4: Server Actions
+
+Server Actions can simplify certain server-side mutations.
+
+They are useful for operations such as:
+
+- Creating records
+- Updating settings
+- Submitting forms
+- Deleting resources
+
+Keep validation and authorization on the server.
+
+Never assume that hiding a UI element provides security.
+
+---
+
+# Chapter 5: Authentication
+
+Authentication should have a clear boundary.
+
+A typical application may contain:
+
+- Public routes
+- Authentication routes
+- Protected routes
+- Server-side authorization checks
+
+Authentication answers:
+
+> Who is this user?
+
+Authorization answers:
+
+> What is this user allowed to do?
+
+These are separate concerns.
+
+---
+
+# Chapter 6: Database Access
+
+Don't scatter database queries throughout the application.
+
+Create a clear data-access layer when the project becomes complex enough to benefit from one.
+
+For example:
+
+```text
+app/
+components/
+lib/
+  db/
+  auth/
+  payments/
+  email/
+````
+
+This keeps infrastructure details away from UI code.
+
+---
+
+# Chapter 7: Loading and Error States
+
+Every important asynchronous operation should have predictable states.
+
+Consider:
+
+* Loading
+* Success
+* Empty
+* Error
+
+An empty dashboard is different from a failed dashboard.
+
+Communicating that difference clearly improves the user experience.
+
+---
+
+# Chapter 8: Forms
+
+Forms should validate input on the server.
+
+Client-side validation improves the experience, but it should not be treated as a security boundary.
+
+A reliable flow looks like:
+
+**Input → Validation → Authorization → Mutation → Response**
+
+Return useful errors when something goes wrong.
+
+---
+
+# Chapter 9: Performance
+
+Performance starts with architecture.
+
+Pay attention to:
+
+* JavaScript sent to the browser
+* Image sizes
+* Database queries
+* Network requests
+* Rendering strategy
+
+Avoid optimizing blindly.
+
+Measure first.
+
+Then optimize the slowest part.
+
+---
+
+# Chapter 10: Environment Variables
+
+Keep configuration outside your source code.
+
+Typical variables include:
+
+```text
+DATABASE_URL
+AUTH_SECRET
+API_KEY
+PAYMENT_SECRET
+```
+
+Never commit secrets to a public repository.
+
+Separate public configuration from server-only secrets.
+
+---
+
+# Chapter 11: Project Organization
+
+A growing project benefits from predictable conventions.
+
+For example:
+
+```text
+app/
+components/
+lib/
+  auth/
+  db/
+  email/
+  payments/
+public/
+types/
+```
+
+The exact structure is less important than consistency.
+
+A developer should be able to locate functionality without searching the entire repository.
+
+---
+
+# Chapter 12: Testing
+
+Testing should focus on important behavior.
+
+Useful layers include:
+
+### Unit Tests
+
+Test isolated functions.
+
+### Integration Tests
+
+Test interactions between parts of the application.
+
+### End-to-End Tests
+
+Test complete user flows.
+
+Prioritize critical paths such as:
+
+* Sign up
+* Sign in
+* Checkout
+* Creating important resources
+* Account management
+
+---
+
+# Chapter 13: Deployment
+
+A production deployment should be repeatable.
+
+A typical workflow is:
+
+**Push → Build → Test → Deploy → Monitor**
+
+Automating this process reduces human error.
+
+Keep development and production environments separated.
+
+---
+
+# Common Mistakes
+
+Avoid:
+
+* Making every component a Client Component
+* Mixing database logic into UI components
+* Trusting client-side validation
+* Exposing server secrets
+* Overengineering small applications
+* Optimizing without measuring
+
+Good architecture is about appropriate complexity.
+
+Not maximum complexity.
+
+---
+
+# Final Checklist
+
+Before launching a Next.js application, verify:
+
+* [ ] Authentication works correctly
+* [ ] Authorization is enforced server-side
+* [ ] Forms validate input
+* [ ] Secrets are protected
+* [ ] Error states exist
+* [ ] Loading states exist
+* [ ] Critical flows are tested
+* [ ] Production configuration is correct
+* [ ] Application performance has been measured
+
+---
+
+# Final Thoughts
+
+Modern Next.js gives developers a powerful set of primitives.
+
+The challenge isn't learning every feature.
+
+It's knowing when to use each one.
+
+Keep the architecture simple, separate responsibilities, validate data on the server, and optimize based on evidence.
+
+A maintainable application is one that remains understandable six months after it was built.
+
